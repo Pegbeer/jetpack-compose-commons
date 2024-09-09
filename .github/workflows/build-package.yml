@@ -1,0 +1,47 @@
+name: Android Library
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - uses: actions/checkout@v2
+        name: set up JDK 11
+
+      # 2. Configurar version de Java
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      # 3. Configurar permisos de Gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4. Cachear dependencias de Gradle para optimizar tiempo de build
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle
+
+      # 5. Compilar y generar el paquete .aar
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease
+
+      # 6. Guardar el paquete generado
+      - name: Upload AAR/JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: library-package
+          path: app/build/outputs/aar/app-release.aar
