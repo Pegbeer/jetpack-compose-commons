@@ -64,7 +64,7 @@ jobs:
           name: library-package
 
       - name: Verify .aar file
-        run:  cd app/build/outputs/aar; ls
+        run:  ls
 
       # 3. Crear un Release en GitHub
       - name: Create GitHub Release
