@@ -38,3 +38,7 @@ jobs:
       # 5. Compilar y generar el paquete .aar
       - name: Build with Gradle
         run: ./gradlew assembleRelease
+
+      # 6.  Verificar archivo creado
+      - name: Verify .aar file
+        run: ls
