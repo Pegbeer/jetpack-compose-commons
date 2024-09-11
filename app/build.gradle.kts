@@ -60,7 +60,7 @@ dependencies {
 
 publishing{
     publications{
-        create<MavenPublication>("maven"){
+        create<MavenPublication>("commons"){
             groupId = "me.pegbeer.commons"
             artifactId = "commons"
             version = "1.0.0"
