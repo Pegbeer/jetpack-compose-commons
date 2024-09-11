@@ -47,11 +47,17 @@ jobs:
       # 1. Checkout del código
       - uses: actions/checkout@v2
 
-      # 2. Configurar permisos de Gradle
+      # 2. Configurar versión de Java
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      # 3. Configurar permisos de Gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # 3. Crear un Package de GitHub
+      # 4. Crear un Package de GitHub
       - name: Publishes the package
         run: ./gradlew publish
         env:
