@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -56,6 +59,14 @@ dependencies {
 }
 
 publishing{
+    publications{
+        create<MavenPublication>("maven"){
+            groupId = "me.pegbeer.commons"
+            artifactId = "commons"
+            version = "1.0.0"
+            artifact("${layout.buildDirectory}/outputs/aar/app-release.aar")
+        }
+    }
     repositories{
         maven {
             name = "GitHubPackages"
