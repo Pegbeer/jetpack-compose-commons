@@ -39,6 +39,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
+      - name: Verify .aar file
+        run:  cd app/build/outputs/aar; ls
+
       # 6. Guardar el paquete generado
       - name: Upload AAR/JAR
         uses: actions/upload-artifact@v3
@@ -59,6 +62,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: library-package
+
+      - name: Verify .aar file
+        run:  cd app/build/outputs/aar; ls
 
       # 3. Crear un Release en GitHub
       - name: Create GitHub Release
