@@ -8,15 +8,13 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       # 1. Checkout del código
       - uses: actions/checkout@v2
-        name: set up JDK 17
 
-      # 2. Configurar version de Java
+      # 2. Configurar versión de Java
       - uses: actions/setup-java@v2
         with:
           java-version: '17'
@@ -47,3 +45,38 @@ jobs:
         with:
           name: library-package
           path: app/build/outputs/aar/app-release.aar
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - uses: actions/checkout@v2
+
+      # 2. Descargar el Artifact
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: library-package
+
+      # 3. Crear un Release en GitHub
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.0
+          release_name: 'Release v1.0.0'
+          draft: false
+          pre_release: false
+
+      # 4. Subir el Asset al Release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/aar/commons.aar
+          asset_name: commons.aar
+          asset_content_type: application/zip
