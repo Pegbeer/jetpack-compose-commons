@@ -70,7 +70,7 @@ jobs:
           tag_name: v1.0.0
           release_name: 'Release v1.0.0'
           draft: false
-          pre_release: false
+          prerelease: false
 
       # 4. Subir el Asset al Release
       - name: Upload Release Asset
