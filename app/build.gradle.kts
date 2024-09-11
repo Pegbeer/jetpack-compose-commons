@@ -59,6 +59,7 @@ publishing{
     repositories{
         maven {
             name = "GitHubPackages"
+            print("ESTO ESTA PASANDO: ${System.getenv("GITHUB_ACTOR")}")
             url = uri("https://maven.pkg.github.com/${System.getenv("GITHUB_ACTOR")}/jetpack-compose-commons")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
