@@ -53,13 +53,3 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
-
-tasks.register<Copy>("renameAAR") {
-    from("${layout.buildDirectory}/outputs/aar/app-release.aar")
-    into("${layout.buildDirectory}/outputs/aar/")
-    rename("app-release.aar", "commons.aar")
-}
-
-tasks.named("assemble") {
-    finalizedBy("renameAAR")
-}
