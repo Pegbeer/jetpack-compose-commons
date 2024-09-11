@@ -41,4 +41,4 @@ jobs:
 
       # 6.  Verificar archivo creado
       - name: Verify .aar file
-        run: ls
+        run: cd /app/build/outputs/aar; ls
