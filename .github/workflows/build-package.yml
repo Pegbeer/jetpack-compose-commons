@@ -39,17 +39,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
-      - name: Verify .aar file
-        run:  cd app/build/outputs/aar; ls
-
-      # 6. Guardar el paquete generado
-      - name: Upload AAR/JAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: library-package
-          path: app/build/outputs/aar/app-release.aar
-
-  release:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
 
@@ -57,32 +47,8 @@ jobs:
       # 1. Checkout del código
       - uses: actions/checkout@v2
 
-      # 2. Descargar el Artifact
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: library-package
-
-      - name: Verify .aar file
-        run:  ls
-
-      # 3. Crear un Release en GitHub
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
+      # 2. Crear un Package de GitHub
+      - name: Publishes the package
+        run: ./gradlew publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v1.0.0
-          release_name: 'Release v1.0.0'
-          draft: false
-          prerelease: false
-
-      # 4. Subir el Asset al Release
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app-release.aar
-          asset_name: app-release.aar
-          asset_content_type: application/zip
