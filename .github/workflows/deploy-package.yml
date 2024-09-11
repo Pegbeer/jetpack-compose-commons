@@ -1,7 +1,7 @@
 name: Publish package to Github Packages
 on:
   release:
-    types: [created] # Publica el package cuando se crea un Release
+    types: [published] # Publica el package cuando se crea un Release
 jobs:
   publish:
     runs-on: ubuntu-latest
