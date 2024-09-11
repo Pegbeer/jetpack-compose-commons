@@ -1,0 +1,27 @@
+name: Publish package to Github Packages
+on:
+  release:
+    types: [created] # Publica el package cuando se crea un Release
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - uses: actions/checkout@v4
+
+      # 2. Configurar versión de Java
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      # 3. Configurar permisos de Gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4. Crear un Package de GitHub
+      - name: Publishes the package
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
