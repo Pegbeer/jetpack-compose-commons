@@ -14,12 +14,12 @@ jobs:
     steps:
       # 1. Checkout del código
       - uses: actions/checkout@v2
-        name: set up JDK 11
+        name: set up JDK 17
 
       # 2. Configurar version de Java
       - uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'adopt'
 
       # 3. Configurar permisos de Gradle
