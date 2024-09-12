@@ -34,6 +34,12 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures{
+        compose = true
+    }
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
 }
 
 kotlin{
@@ -52,6 +58,8 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
+    debugImplementation(libs.ui.tooling)
+
     implementation(libs.material3)
 
     androidTestImplementation(libs.androidx.junit)
