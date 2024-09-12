@@ -2,22 +2,22 @@ name: Android Library
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       # 1. Checkout del código
       - uses: actions/checkout@v2
-        name: set up JDK 11
 
-      # 2. Configurar version de Java
+      # 2. Configurar versión de Java
       - uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'adopt'
 
       # 3. Configurar permisos de Gradle
@@ -39,9 +39,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
-      # 6. Guardar el paquete generado
-      - name: Upload AAR/JAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: library-package
-          path: app/build/outputs/aar/app-release.aar
+      # 6.  Verificar archivo creado
+      - name: Verify .aar file
+        run: cd app/build/outputs/aar; ls
+
+      # 7. Crear un Package de GitHub
+      - name: Publishes the package
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

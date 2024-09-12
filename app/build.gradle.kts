@@ -1,11 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    `maven-publish`
 }
 
 android {
     namespace = "me.pegbeer.commons"
     compileSdk = 34
+    version = 1
 
     defaultConfig {
         minSdk = 24
@@ -14,7 +19,7 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -27,7 +32,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
@@ -51,4 +56,26 @@ dependencies {
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+publishing{
+    publications{
+        create<MavenPublication>("commons"){
+            groupId = "me.pegbeer"
+            artifactId = "commons"
+            version = "1.0.0"
+            artifact("build/outputs/aar/app-release.aar")
+        }
+    }
+    repositories{
+        maven {
+            name = "GitHubPackages"
+            print("ESTO ESTA PASANDO: ${System.getenv("GITHUB_ACTOR")}")
+            url = uri("https://maven.pkg.github.com/${System.getenv("GITHUB_ACTOR")}/jetpack-compose-commons")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
