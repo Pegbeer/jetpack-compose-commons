@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-
+        version = 1.1
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -75,7 +75,7 @@ publishing{
         create<MavenPublication>("commons"){
             groupId = "me.pegbeer"
             artifactId = "commons"
-            version = "1.0.1"
+            version = "1.1.0"
             artifact("build/outputs/aar/app-release.aar")
         }
     }
