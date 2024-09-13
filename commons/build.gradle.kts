@@ -76,7 +76,7 @@ publishing{
             groupId = "me.pegbeer"
             artifactId = "commons"
             version = "1.1.0"
-            artifact("build/outputs/aar/app-release.aar")
+            artifact("build/outputs/aar/commons-release.aar")
         }
     }
     repositories{
