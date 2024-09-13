@@ -85,7 +85,7 @@ publishing{
         create<MavenPublication>("commons"){
             groupId = "me.pegbeer"
             artifactId = "commons"
-            version = "1.0.0"
+            version = "1.0.1"
             artifact("build/outputs/aar/app-release.aar")
         }
     }
