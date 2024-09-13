@@ -1,4 +1,4 @@
-package me.pegbeer.commons.ui.theme
+package me.pegbeer.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

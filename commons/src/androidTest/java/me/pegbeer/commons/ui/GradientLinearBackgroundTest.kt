@@ -17,7 +17,7 @@ class GradientLinearBackgroundTest {
      @Test
      fun testGradientLinearBackground(){
          composeTestRule.setContent {
-             GradientLinearBackground(
+             me.pegbeer.commons.ui.GradientLinearBackground(
                  from = Color.Red,
                  until = Color.Blue,
                  modifier = Modifier.testTag("gradientBox")

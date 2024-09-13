@@ -15,7 +15,7 @@ class OutlinedTextFieldTest {
     @Test
     fun testOutlinedTextFieldDisplaysPlaceholder() {
         composeTestRule.setContent {
-            OutlinedTextField(
+            me.pegbeer.commons.ui.OutlinedTextField(
                 placeholder = "Placeholder"
             )
         }
@@ -27,7 +27,7 @@ class OutlinedTextFieldTest {
     @Test
     fun testOutlinedTextFieldInput() {
         composeTestRule.setContent {
-            OutlinedTextField(
+            me.pegbeer.commons.ui.OutlinedTextField(
                 placeholder = "Placeholder"
             )
         }

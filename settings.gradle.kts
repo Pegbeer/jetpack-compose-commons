@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "commons"
 include(":app")
+include(":commons")
