@@ -16,6 +16,9 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -34,6 +37,17 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures{
+        compose = true
+    }
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 kotlin{
@@ -45,6 +59,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.lifecycle.runtime.ktx)
+
     testImplementation(libs.junit)
 
     implementation(libs.activity.compose)
@@ -52,10 +68,16 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.tooling)
+
     implementation(libs.material3)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4.android)
+    debugImplementation(libs.ui.test.manifest)
 }
 
 publishing{
@@ -63,14 +85,13 @@ publishing{
         create<MavenPublication>("commons"){
             groupId = "me.pegbeer"
             artifactId = "commons"
-            version = "1.0.0"
+            version = "1.0.1"
             artifact("build/outputs/aar/app-release.aar")
         }
     }
     repositories{
         maven {
             name = "GitHubPackages"
-            print("ESTO ESTA PASANDO: ${System.getenv("GITHUB_ACTOR")}")
             url = uri("https://maven.pkg.github.com/${System.getenv("GITHUB_ACTOR")}/jetpack-compose-commons")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
